@@ -54,10 +54,14 @@ class AbstractChart extends Component {
           key={Math.random()}
           x={paddingRight - yLabelsOffset}
           textAnchor="end"
-          y={(height * 3 / 4) - ((height - paddingTop) / count * i) + 12}
+          /*editado valor de y para ajustar o posicionamento dos valores de % á esquerda, remover +6 para valor original*/
+          y={(height * 3 / 4) - ((height - paddingTop) / count * i) + 6}
           fontSize={12}
           fill={this.props.chartConfig.color(0.5)}
-        >{count === 1 ? data[0].toFixed(decimalPlaces) : ((this.calcScaler(data) / (count - 1)) * i + Math.min(...data)).toFixed(decimalPlaces)}
+        >{count === 1 ? data[0].toFixed(decimalPlaces) :
+            Math.max(...data).toFixed(decimalPlaces) <=2 ?
+                (i===0? 0:(i===3? Math.max(...data).toFixed(decimalPlaces):null))
+                :((this.calcScaler(data) / (count - 1)) * i + Math.min(...data)).toFixed(decimalPlaces)}
         </Text>
       )
     })
@@ -71,7 +75,8 @@ class AbstractChart extends Component {
         <Text
           key={Math.random()}
           x={((width - paddingRight) / labels.length * (i)) + paddingRight + horizontalOffset}
-          y={(height * 3 / 4) + paddingTop + (fontSize * 2)}
+            /*editado valor de y para ajustar o posicionamento das labels de meses , remover -10 para valor original*/
+          y={(height * 3 / 4) + paddingTop + (fontSize * 2)-10}
           fontSize={fontSize}
           fill={this.props.chartConfig.color(0.5)}
           textAnchor="middle"
